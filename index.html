@@ -1,0 +1,452 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirHub - Premium Flight Booking Experience</title>
+    <meta name="description" content="Experience next-level flight booking with AirHub's premium, immersive interface">
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileOverlay" class="mobile-menu-overlay">
+        <div id="closeMenu" class="mobile-close-btn" role="button" tabindex="0" aria-label="Close menu">&times;</div>
+
+        <div class="mobile-menu-content">
+            <span class="menu-label">EXPLORE AIRHUB</span>
+            <nav class="mobile-nav">
+                <a href="#home" class="mobile-overlay-link"><span class="link-num">01</span> Home</a>
+                <a href="#destinations" class="mobile-overlay-link"><span class="link-num">02</span> Destinations</a>
+                <a href="#deals" class="mobile-overlay-link"><span class="link-num">03</span> Deals</a>
+                <a href="#about" class="mobile-overlay-link"><span class="link-num">04</span> About</a>
+            </nav>
+
+            <div class="mobile-menu-footer">
+                <p>Curated Luxury Travel</p>
+                <div class="mobile-socials">
+                    <span>IG</span> / <span>TW</span> / <span>FB</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+
+
+    <!-- Navigation (Pill Style) -->
+    <nav class="navbar glass-effect reveal-element">
+        <div class="nav-container">
+            <div class="logo magnetic-btn-small">
+                <img src="images/logo.png" alt="AirHub logo" class="logo-img" onerror="this.style.display='none'">
+                AIRHUB
+            </div>
+            <ul class="nav-center-links">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#destinations" class="nav-link">Destinations</a></li>
+                <li><a href="#deals" class="nav-link">Deals</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div id="themeToggle" class="theme-toggle magnetic-btn-small" role="button" tabindex="0" aria-label="Toggle theme">&#9728;&#65039;</div>
+                <div id="mobileMenuBtn" class="mobile-menu-btn magnetic-btn-small" role="button" tabindex="0" aria-label="Open menu">
+                    <span class="menu-text">MENU</span>
+                    <span class="airplane-icon">&#9992;</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Editorial Style) -->
+    <section id="home" class="hero-section">
+        <!-- Animated Creative Background (Inside Hero Only) -->
+        <div class="aurora-bg">
+            <div class="hero-slider">
+                <!-- Slide 1: Using your local hero1.jpg -->
+                <div class="hero-slide active" style="background-image: url('images/hero1.jpg');">
+                </div>
+                <!-- Slide 2: Using your local hero2.jpg -->
+                <div class="hero-slide" style="background-image: url('images/hero2.jpg');">
+                </div>
+                <!-- Slide 3: Using your initial local hero.jpg -->
+                <div class="hero-slide" style="background-image: url('images/hero.jpg');">
+                </div>
+            </div>
+            <div class="hero-bg-mask"></div>
+            <div class="background-grid"></div>
+            <div class="aurora-blob aurora-blob-1"></div>
+            <div class="aurora-blob aurora-blob-2"></div>
+            <div class="aurora-blob aurora-blob-3"></div>
+            <div class="glass-orb orb-1"></div>
+            <div class="glass-orb orb-2"></div>
+            <div class="glass-orb orb-3"></div>
+        </div>
+
+        <!-- Slider Navigation Controls (Moved outside aurora-bg for better clickability) -->
+        <div class="slider-controls">
+            <button class="slider-btn prev-btn" id="prevSlide" aria-label="Previous Slide">&#10094;</button>
+            <button class="slider-btn next-btn" id="nextSlide" aria-label="Next Slide">&#10095;</button>
+        </div>
+
+        <!-- Slider Progress Dots -->
+        <div class="slider-dots" id="sliderDots">
+            <div class="dot active" data-index="0"></div>
+            <div class="dot" data-index="1"></div>
+            <div class="dot" data-index="2"></div>
+        </div>
+        <div class="hero-tagline reveal-element">
+            SMART TRAVEL, MADE SIMPLE
+        </div>
+
+        <h1 class="hero-title reveal-element">
+            Find your next <span class="italic-red">flight</span><br>
+            with comfort and <span class="italic-red">confidence.</span>
+        </h1>
+
+        <p class="hero-subtitle reveal-element">
+            Search routes, compare options, and book smoothly with a clean experience designed for everyday travelers.
+        </p>
+
+        <div class="hero-cta reveal-element">
+            <button class="btn-editorial magnetic-btn">Explore Destinations</button>
+            <a href="#" class="btn-story magnetic-btn">
+                <div class="play-icon">&rarr;</div>
+                Learn More
+            </a>
+        </div>
+
+        <div class="scroll-indicator reveal-element">
+            DISCOVER MORE
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <div class="marquee-container reveal-element">
+        <div class="marquee-content">
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/ae.png" alt="United Arab Emirates flag">
+                Dubai
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/my.png" alt="Malaysia flag">
+                Malaysia
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/th.png" alt="Thailand flag">
+                Thailand
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/id.png" alt="Indonesia flag">
+                Bali
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/sg.png" alt="Singapore flag">
+                Singapore
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/mv.png" alt="Maldives flag">
+                Maldives
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/cn.png" alt="China flag">
+                China
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/id.png" alt="Indonesia flag">
+                Indonesia
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/jp.png" alt="Japan flag">
+                Japan
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/us.png" alt="United States flag">
+                USA
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/au.png" alt="Australia flag">
+                Australia
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/ca.png" alt="Canada flag">
+                Canada
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/qa.png" alt="Qatar flag">
+                Qatar
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/sa.png" alt="Saudi Arabia flag">
+                Saudi Arabia
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/ro.png" alt="Romania flag">
+                Romania
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/il.png" alt="Israel flag">
+                Israel
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/bh.png" alt="Bahrain flag">
+                Bahrain
+            </span>
+            <span class="marquee-dot"></span>
+            <span class="marquee-item">
+                <img class="marquee-flag" src="https://flagcdn.com/w40/kw.png" alt="Kuwait flag">
+                Kuwait
+            </span>
+        </div>
+    </div>
+
+    <!-- Search Section (Integrated) -->
+    <section id="search" class="search-section reveal-element" style="padding: var(--spacing-lg) 0;">
+        <div class="container">
+            <div class="search-widget glass-effect">
+                <div class="search-head">
+                    <p class="search-eyebrow">TRAVEL PLANNER</p>
+                    <h3 class="search-title">Build your trip in seconds</h3>
+                </div>
+
+                <div class="search-tabs">
+                    <button class="search-tab active" type="button" data-tab="flights">✈ Flights</button>
+                    <button class="search-tab" type="button" data-tab="hotels">🏨 Hotels</button>
+                    <button class="search-tab" type="button" data-tab="packages">🎒 Packages</button>
+                </div>
+
+                <div class="quick-routes">
+                    <button type="button" class="quick-route" data-from="Dubai (DXB)" data-to="Bangkok (BKK)">Dubai -> Bangkok</button>
+                    <button type="button" class="quick-route" data-from="Singapore (SIN)" data-to="Bali (DPS)">Singapore -> Bali</button>
+                    <button type="button" class="quick-route" data-from="New York (JFK)" data-to="London (LHR)">New York -> London</button>
+                </div>
+
+                <form class="search-form" id="searchForm">
+                    <div class="search-inputs">
+                        <div class="floating-input route-field">
+                            <span class="input-symbol">◎</span>
+                            <input type="text" id="from" placeholder=" " value="New York (JFK)">
+                            <label for="from">From</label>
+                        </div>
+                        <button class="swap-route-btn" id="swapRoute" type="button" aria-label="Swap origin and destination">⇄</button>
+                        <div class="floating-input route-field">
+                            <span class="input-symbol">◉</span>
+                            <input type="text" id="to" placeholder=" " value="London (LHR)">
+                            <label for="to">To</label>
+                        </div>
+                        <div class="floating-input date-field">
+                            <span class="input-symbol">◷</span>
+                            <input type="date" id="departDate" placeholder=" " aria-label="Departure date">
+                            <label for="departDate">Depart</label>
+                        </div>
+                        <div class="floating-input date-field">
+                            <span class="input-symbol">◴</span>
+                            <input type="date" id="returnDate" placeholder=" " aria-label="Return date">
+                            <label for="returnDate">Return</label>
+                        </div>
+                        <div class="floating-input traveller-field">
+                            <span class="input-symbol">👤</span>
+                            <select id="travellers" aria-label="Travellers">
+                                <option value="1">1 Traveller</option>
+                                <option value="2" selected>2 Travellers</option>
+                                <option value="3">3 Travellers</option>
+                                <option value="4">4 Travellers</option>
+                                <option value="5">5+ Travellers</option>
+                            </select>
+                            <label for="travellers">Travellers</label>
+                        </div>
+                    </div>
+                    <div class="search-actions">
+                        <button class="button search-pill-btn magnetic-btn" id="searchFlights" type="submit">
+                            <span id="searchBtnLabel">Search Flights</span>
+                            <span class="button__icon-wrapper" aria-hidden="true">
+                                <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 14 15">
+                                    <path fill="currentColor"
+                                        d="M13.376 11.552l-.232 3.232-6.548-3.003.215-3.02 6.565 2.791zM6.393 0l-1.273 1.272 2.431 2.429H0v1.8h7.55L5.12 7.93l1.273 1.273 4.604-4.602L6.393 0z">
+                                    </path>
+                                </svg>
+                                <svg width="10" class="button__icon-svg button__icon-svg--copy"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                    <path fill="currentColor"
+                                        d="M13.376 11.552l-.232 3.232-6.548-3.003.215-3.02 6.565 2.791zM6.393 0l-1.273 1.272 2.431 2.429H0v1.8h7.55L5.12 7.93l1.273 1.273 4.604-4.602L6.393 0z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                    <p class="search-message" id="searchMessage" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results-section" style="display: none;">
+        <div class="container">
+            <div class="results-header">
+                <h3 class="results-title">Available Options</h3>
+                <p class="results-summary" id="resultsSummary"></p>
+            </div>
+            <div class="flights-grid" id="flightsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Popular Destinations - Modern Grid -->
+    <section id="destinations" class="destinations-section">
+        <div class="container">
+            <div class="destinations-modern reveal-element">
+                <div class="destinations-modern-head">
+                    <div>
+                        <p class="destinations-kicker">POPULAR TRAVEL DESTINATIONS</p>
+                        <h2 class="destinations-title">Explore handpicked destinations in a modern layout</h2>
+                        <p class="destinations-subtitle">Premium routes, curated visuals, and city-to-island escapes that match your travel mood.</p>
+                    </div>
+                    <a href="#search" class="destinations-modern-btn magnetic-btn">Explore More</a>
+                </div>
+
+                <div class="destinations-modern-grid">
+                    <article class="modern-destination-card magnetic-card">
+                        <div class="modern-destination-image" style="background-image: url('https://images.unsplash.com/photo-1564550083072-4e0606d6a8dc?q=80&w=900&auto=format&fit=crop');"></div>
+                        <div class="modern-destination-meta">
+                            <h4>Thailand</h4>
+                            <p>20 Listings</p>
+                        </div>
+                    </article>
+
+                    <article class="modern-destination-card magnetic-card">
+                        <div class="modern-destination-image" style="background-image: url('https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=900&auto=format&fit=crop');"></div>
+                        <div class="modern-destination-meta">
+                            <h4>Maldives</h4>
+                            <p>40 Listings</p>
+                        </div>
+                    </article>
+
+                    <article class="modern-destination-card magnetic-card">
+                        <div class="modern-destination-image" style="background-image: url('https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?q=80&w=1100&auto=format&fit=crop');"></div>
+                        <div class="modern-destination-meta">
+                            <h4>Indonesia</h4>
+                            <p>80 Listings</p>
+                        </div>
+                    </article>
+
+                    <article class="modern-destination-card magnetic-card">
+                        <div class="modern-destination-image" style="background-image: url('https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=900&auto=format&fit=crop');"></div>
+                        <div class="modern-destination-meta">
+                            <h4>Bali</h4>
+                            <p>20 Listings</p>
+                        </div>
+                    </article>
+
+                    <article class="modern-destination-card magnetic-card">
+                        <div class="modern-destination-image" style="background-image: url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=900&auto=format&fit=crop');"></div>
+                        <div class="modern-destination-meta">
+                            <h4>Malaysia</h4>
+                            <p>26 Listings</p>
+                        </div>
+                    </article>
+
+                    <article class="modern-destination-card magnetic-card">
+                        <div class="modern-destination-image" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=900&auto=format&fit=crop');"></div>
+                        <div class="modern-destination-meta">
+                            <h4>Paris</h4>
+                            <p>31 Listings</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Easy Steps For Booking -->
+    <section id="booking-steps" class="booking-steps-section">
+        <div class="container">
+            <div class="booking-steps-head reveal-element">
+                <div>
+                    <p class="booking-kicker">EASY STEPS FOR BOOKING</p>
+                    <h2 class="booking-title">Book your next trip in three simple steps</h2>
+                    <p class="booking-subtitle">A clean process built for speed, clarity, and confidence from search to boarding.</p>
+                </div>
+                <a href="#search" class="booking-view-btn magnetic-btn">View More</a>
+            </div>
+
+            <div class="booking-steps-grid reveal-element">
+                <article class="booking-step-card step-one magnetic-card">
+                    <div class="booking-step-icon">01</div>
+                    <h3>Choose Destination</h3>
+                    <p>Select your departure, destination, and dates from our curated routes.</p>
+                </article>
+
+                <article class="booking-step-card step-two magnetic-card">
+                    <div class="booking-step-icon">02</div>
+                    <h3>Make Payment</h3>
+                    <p>Secure your booking with transparent pricing and trusted payment flow.</p>
+                </article>
+
+                <article class="booking-step-card step-three magnetic-card">
+                    <div class="booking-step-icon">03</div>
+                    <h3>Ready For Travelling</h3>
+                    <p>Receive your ticket instantly and get ready for a smooth journey.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer reveal-element">
+        <div class="container">
+            <div class="footer-content" style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: var(--spacing-lg);">
+                <div class="footer-section">
+                    <div class="logo">AIRHUB</div>
+                    <p style="margin-top: 1rem; max-width: 300px;">Helping travelers book flights with clarity, comfort,
+                        and reliable support.</p>
+                </div>
+                <div class="footer-section">
+                    <h4
+                        style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 2rem;">
+                        Connections</h4>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61574717737781" target="_blank" rel="noopener noreferrer" class="nav-link" style="display: block; margin-bottom: 1rem;">Facebook</a>
+                        <a href="#" class="nav-link" style="display: block; margin-bottom: 1rem;">Instagram</a>
+                        <a href="#" class="nav-link" style="display: block; margin-bottom: 1rem;">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom"
+                style="text-align: left; margin-top: var(--spacing-lg); font-size: 0.65rem; opacity: 0.4;">
+                <p>&copy; 2026 AIRHUB AVIATION. ALL RIGHTS RESERVED.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
