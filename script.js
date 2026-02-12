@@ -345,6 +345,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach(el => revealObserver.observe(el));
 
+    // === LAZY LOAD BACKGROUND IMAGES ===
+    const lazyBackgrounds = document.querySelectorAll('.lazy-bg[data-bg]');
+
+    const loadBackgroundImage = (element) => {
+        if (!element || element.dataset.bgLoaded === 'true') {
+            return;
+        }
+
+        const src = element.dataset.bg;
+        if (!src) {
+            return;
+        }
+
+        const applyBackground = () => {
+            element.style.backgroundImage = `url('${src}')`;
+            element.dataset.bgLoaded = 'true';
+            element.classList.add('bg-loaded');
+        };
+
+        const img = new Image();
+        img.src = src;
+
+        if (img.complete) {
+            applyBackground();
+            return;
+        }
+
+        img.onload = applyBackground;
+        img.onerror = applyBackground;
+    };
+
+    if ('IntersectionObserver' in window) {
+        const bgObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    loadBackgroundImage(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            rootMargin: '250px 0px',
+            threshold: 0.01
+        });
+
+        lazyBackgrounds.forEach(el => bgObserver.observe(el));
+    } else {
+        lazyBackgrounds.forEach(loadBackgroundImage);
+    }
+
     // === SEARCH SECTION ===
     const searchForm = document.getElementById('searchForm');
     const searchBtn = document.getElementById('searchFlights');

@@ -375,6 +375,10 @@ body {
     box-shadow: var(--glass-shadow);
 }
 
+.lazy-bg {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
 /* === CONTAINER === */
 .container {
     max-width: 1400px;
