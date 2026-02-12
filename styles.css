@@ -2508,20 +2508,16 @@ body.light-theme .modern-destination-meta p {
     color: #4b5563;
 }
 
-/* === BOOKING STEPS === */
-.booking-steps-section {
+/* === ABOUT AIRHUB === */
+.about-airhub-section {
     padding: var(--spacing-xl) 0;
 }
 
-.booking-steps-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1rem;
+.about-airhub-head {
     margin-bottom: 1rem;
 }
 
-.booking-kicker {
+.about-kicker {
     margin: 0 0 0.4rem;
     letter-spacing: 0.2em;
     font-size: 0.68rem;
@@ -2529,112 +2525,149 @@ body.light-theme .modern-destination-meta p {
     color: var(--text-secondary);
 }
 
-.booking-title {
+.about-title {
     margin: 0 0 0.45rem;
     font-family: var(--font-display);
     font-size: clamp(1.6rem, 2.8vw, 2.5rem);
 }
 
-.booking-subtitle {
+.about-subtitle {
     margin: 0;
     color: var(--text-secondary);
-    max-width: 700px;
+    max-width: 760px;
 }
 
-.booking-view-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.7rem 1.25rem;
-    border-radius: 999px;
-    text-decoration: none;
-    background: var(--gradient-accent);
-    color: #fff;
-    font-weight: 600;
-}
-
-.booking-steps-grid {
+.about-airhub-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.9rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 1rem;
 }
 
-.booking-step-card {
-    position: relative;
-    border-radius: 22px;
-    padding: 1.25rem;
-    min-height: 260px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    overflow: hidden;
+.about-main-card {
+    border-radius: 24px;
+    padding: 1.3rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background:
+        radial-gradient(900px 300px at 0% 0%, rgba(217, 4, 41, 0.2), transparent 55%),
+        linear-gradient(140deg, rgba(10, 12, 17, 0.9), rgba(12, 30, 49, 0.78));
 }
 
-.booking-step-card h3 {
-    margin: 0.9rem 0 0.45rem;
+.about-main-card h3 {
+    margin: 0 0 0.4rem;
     font-family: var(--font-display);
-    font-size: 1.6rem;
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
 }
 
-.booking-step-card p {
+.about-main-card p {
     margin: 0;
     color: rgba(255, 255, 255, 0.82);
-    max-width: 320px;
+    max-width: 620px;
 }
 
-.booking-step-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
+.about-stats-row {
+    margin-top: 1rem;
     display: grid;
-    place-items: center;
-    font-weight: 700;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.9);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+}
+
+.about-stat-pill {
+    border-radius: 14px;
+    padding: 0.72rem 0.78rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.about-stat-pill strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    line-height: 1.1;
+}
+
+.about-stat-pill span {
+    display: block;
+    margin-top: 0.22rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.about-feature-list {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.about-feature-card {
+    border-radius: 20px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background:
+        linear-gradient(140deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(8, 9, 14, 0.78);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.about-feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.about-feature-card h4 {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+}
+
+.about-feature-card p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+body.light-theme .about-title {
     color: #0f172a;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.step-one {
-    background: linear-gradient(160deg, rgba(27, 36, 56, 0.9), rgba(17, 89, 129, 0.75));
-}
-
-.step-two {
-    background: linear-gradient(160deg, rgba(217, 4, 41, 0.75), rgba(109, 4, 30, 0.88));
-}
-
-.step-three {
-    background: linear-gradient(160deg, rgba(10, 63, 66, 0.92), rgba(6, 28, 29, 0.95));
-}
-
-body.light-theme .booking-title {
-    color: #0f172a;
-}
-
-body.light-theme .booking-subtitle,
-body.light-theme .booking-kicker {
+body.light-theme .about-kicker,
+body.light-theme .about-subtitle {
     color: #475569;
 }
 
-body.light-theme .booking-step-card {
+body.light-theme .about-main-card {
     border-color: #dce2ea;
+    background:
+        radial-gradient(900px 300px at 0% 0%, rgba(217, 4, 41, 0.12), transparent 55%),
+        linear-gradient(140deg, #ffffff, #f8fafc);
 }
 
-body.light-theme .step-one {
-    background: linear-gradient(160deg, #dbeafe, #bfdbfe);
+body.light-theme .about-main-card p {
+    color: #334155;
 }
 
-body.light-theme .step-two {
-    background: linear-gradient(160deg, #fee2e2, #fecaca);
+body.light-theme .about-stat-pill {
+    border-color: #dde4ef;
+    background: #ffffff;
 }
 
-body.light-theme .step-three {
-    background: linear-gradient(160deg, #ccfbf1, #99f6e4);
-}
-
-body.light-theme .booking-step-card h3 {
+body.light-theme .about-stat-pill strong {
     color: #0f172a;
 }
 
-body.light-theme .booking-step-card p {
+body.light-theme .about-stat-pill span {
+    color: #475569;
+}
+
+body.light-theme .about-feature-card {
+    border-color: #dce2ea;
+    background: #ffffff;
+}
+
+body.light-theme .about-feature-card h4 {
+    color: #0f172a;
+}
+
+body.light-theme .about-feature-card p {
     color: #334155;
 }
 
@@ -2828,13 +2861,12 @@ body.light-theme .booking-step-card p {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .booking-steps-head {
-        align-items: flex-start;
-        flex-direction: column;
+    .about-airhub-grid {
+        grid-template-columns: 1fr;
     }
 
-    .booking-steps-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .about-stats-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
@@ -2962,12 +2994,13 @@ body.light-theme .booking-step-card p {
         height: 175px;
     }
 
-    .booking-steps-grid {
+    .about-stats-row {
         grid-template-columns: 1fr;
     }
 
-    .booking-step-card {
-        min-height: 220px;
+    .about-main-card,
+    .about-feature-card {
+        padding: 0.95rem;
     }
 
     /* Navbar Mobile Fixes */
