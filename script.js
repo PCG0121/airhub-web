@@ -174,15 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (slides.length > 0) {
         applySlideBackground(slides[currentSlide]);
         resetTimer();
-
-        const deferPreload = window.requestIdleCallback || (cb => setTimeout(cb, 800));
-        deferPreload(() => {
-            slides.forEach((slide, index) => {
-                if (index !== currentSlide) {
-                    preloadSlideImage(slide);
-                }
-            });
-        });
     }
 
     // === THEME TOGGLE ===
@@ -347,40 +338,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === LAZY LOAD BACKGROUND IMAGES ===
     const lazyBackgrounds = document.querySelectorAll('.lazy-bg[data-bg]');
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const lowBandwidth = !!(connection && (connection.saveData || /(^|-)2g/.test(connection.effectiveType || '')));
+    const maxConcurrentLoads = lowBandwidth ? 1 : 3;
+    const bgLoadQueue = [];
+    const queuedBgElements = new WeakSet();
+    let activeBgLoads = 0;
 
     const loadBackgroundImage = (element) => {
         if (!element || element.dataset.bgLoaded === 'true') {
-            return;
+            return Promise.resolve();
         }
 
         const src = element.dataset.bg;
         if (!src) {
-            return;
+            return Promise.resolve();
         }
 
-        const applyBackground = () => {
-            element.style.backgroundImage = `url('${src}')`;
-            element.dataset.bgLoaded = 'true';
-            element.classList.add('bg-loaded');
-        };
+        return new Promise(resolve => {
+            const applyBackground = () => {
+                element.style.backgroundImage = `url('${src}')`;
+                element.dataset.bgLoaded = 'true';
+                element.classList.add('bg-loaded');
+                resolve();
+            };
 
-        const img = new Image();
-        img.src = src;
+            const img = new Image();
+            img.src = src;
 
-        if (img.complete) {
-            applyBackground();
+            if (img.complete) {
+                applyBackground();
+                return;
+            }
+
+            img.onload = applyBackground;
+            img.onerror = applyBackground;
+        });
+    };
+
+    const drainBackgroundQueue = () => {
+        while (activeBgLoads < maxConcurrentLoads && bgLoadQueue.length > 0) {
+            const nextElement = bgLoadQueue.shift();
+            if (!nextElement || nextElement.dataset.bgLoaded === 'true') {
+                continue;
+            }
+
+            activeBgLoads += 1;
+            loadBackgroundImage(nextElement).finally(() => {
+                activeBgLoads = Math.max(0, activeBgLoads - 1);
+                drainBackgroundQueue();
+            });
+        }
+    };
+
+    const queueBackgroundImage = (element) => {
+        if (!element || element.dataset.bgLoaded === 'true' || queuedBgElements.has(element)) {
             return;
         }
-
-        img.onload = applyBackground;
-        img.onerror = applyBackground;
+        queuedBgElements.add(element);
+        bgLoadQueue.push(element);
+        drainBackgroundQueue();
     };
 
     if ('IntersectionObserver' in window) {
         const bgObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    loadBackgroundImage(entry.target);
+                    queueBackgroundImage(entry.target);
                     observer.unobserve(entry.target);
                 }
             });
@@ -391,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         lazyBackgrounds.forEach(el => bgObserver.observe(el));
     } else {
-        lazyBackgrounds.forEach(loadBackgroundImage);
+        lazyBackgrounds.forEach(queueBackgroundImage);
     }
 
     // === SEARCH SECTION ===
