@@ -338,6 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === LAZY LOAD BACKGROUND IMAGES ===
     const lazyBackgrounds = document.querySelectorAll('.lazy-bg[data-bg]');
+    const destinationBackgrounds = document.querySelectorAll('#destinations .lazy-bg[data-bg]');
+    const priorityBackgrounds = new Set(destinationBackgrounds);
+    const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const lowBandwidth = !!(connection && (connection.saveData || /(^|-)2g/.test(connection.effectiveType || '')));
     const maxConcurrentLoads = lowBandwidth ? 1 : 3;
@@ -396,9 +399,20 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         queuedBgElements.add(element);
-        bgLoadQueue.push(element);
+        if (priorityBackgrounds.has(element)) {
+            bgLoadQueue.unshift(element);
+        } else {
+            bgLoadQueue.push(element);
+        }
         drainBackgroundQueue();
     };
+
+    if (!lowBandwidth && destinationBackgrounds.length > 0) {
+        const eagerCount = isMobileViewport ? 3 : 1;
+        Array.from(destinationBackgrounds)
+            .slice(0, eagerCount)
+            .forEach(queueBackgroundImage);
+    }
 
     if ('IntersectionObserver' in window) {
         const bgObserver = new IntersectionObserver((entries, observer) => {
@@ -409,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }, {
-            rootMargin: '250px 0px',
+            rootMargin: isMobileViewport ? '900px 0px' : '350px 0px',
             threshold: 0.01
         });
 
