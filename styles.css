@@ -967,13 +967,19 @@ body.light-theme .cart-icon {
 }
 
 .marquee-content {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 42s linear infinite;
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
     font-family: var(--font-serif);
     font-style: italic;
     font-size: 3rem;
     letter-spacing: 0.02em;
+}
+
+.marquee-track {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 .marquee-item {
@@ -1008,7 +1014,7 @@ body.light-theme .cart-icon {
     }
 
     100% {
-        transform: translateX(-100%);
+        transform: translateX(-50%);
     }
 }
 
@@ -1927,7 +1933,7 @@ body:not(.light-theme) #search .floating-input select {
     position: absolute;
     inset: 0;
     background-size: cover;
-    background-position: center;
+    background-position: 38% 15%;
     transform: scale(1.03);
     transition: transform 0.85s ease;
 }
@@ -1981,6 +1987,23 @@ body:not(.light-theme) #search .floating-input select {
     line-height: 1.08;
 }
 
+.deal-highlight {
+    color: #ffd7df;
+    background: linear-gradient(135deg, rgba(217, 4, 41, 0.95), rgba(141, 8, 1, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-radius: 12px;
+    padding: 0.05em 0.28em;
+    box-shadow: 0 8px 18px rgba(217, 4, 41, 0.35);
+}
+
+.deal-image-text {
+    display: inline-block;
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
 .deal-copy {
     margin: 0 0 1rem;
     color: rgba(255, 255, 255, 0.84);
@@ -2032,20 +2055,25 @@ body:not(.light-theme) #search .floating-input select {
 
 .deals-list {
     display: grid;
-    gap: 0.85rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
 }
 
 .deal-mini-card {
     display: grid;
-    grid-template-columns: 86px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 0.8rem;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "thumb"
+        "info"
+        "price";
+    align-items: start;
+    gap: 0.95rem;
     border-radius: 20px;
-    padding: 0.72rem;
+    padding: 0.95rem;
     border: 1px solid rgba(255, 255, 255, 0.13);
     background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-        rgba(8, 9, 14, 0.78);
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+        rgba(8, 9, 14, 0.72);
     box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
     opacity: 0;
     transform: translateY(14px);
@@ -2061,17 +2089,21 @@ body:not(.light-theme) #search .floating-input select {
 }
 
 .deal-mini-thumb {
-    width: 86px;
-    height: 86px;
-    border-radius: 14px;
+    grid-area: thumb;
+    width: 100%;
+    height: 168px;
+    border-radius: 16px;
     background-size: cover;
     background-position: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
 }
 
 .deal-mini-route {
     margin: 0 0 0.2rem;
     font-family: var(--font-display);
-    font-size: 1.08rem;
+    font-size: 1.12rem;
+    line-height: 1.22;
 }
 
 .deal-mini-meta {
@@ -2079,10 +2111,32 @@ body:not(.light-theme) #search .floating-input select {
     color: var(--text-secondary);
     font-size: 0.8rem;
     letter-spacing: 0.03em;
+    line-height: 1.35;
+}
+
+.deal-mini-extra {
+    margin: 0.35rem 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.74rem;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+}
+
+.deal-mini-info {
+    grid-area: info;
+    min-width: 0;
 }
 
 .deal-mini-price {
-    text-align: right;
+    grid-area: price;
+    text-align: left;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.65rem;
+    margin-top: 0.2rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .deal-mini-price span {
@@ -2124,12 +2178,21 @@ body.light-theme .deal-feature-meta span {
     background: rgba(255, 255, 255, 0.58);
 }
 
+body.light-theme .deal-image-text {
+    color: #0f172a;
+    text-shadow: none;
+}
+
 body.light-theme .deal-mini-card {
     border-color: rgba(0, 0, 0, 0.12);
     background:
         linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(246, 248, 252, 0.95)),
         #ffffff;
     box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+}
+
+body.light-theme .deal-mini-extra {
+    color: #64748b;
 }
 
 @keyframes dealMiniReveal {
@@ -2176,6 +2239,7 @@ body.light-theme .deal-mini-card {
     }
 
     .deals-list {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
 
@@ -2183,26 +2247,37 @@ body.light-theme .deal-mini-card {
         min-height: 360px;
     }
 
+    .deal-feature-media {
+        background-position: 34% 18%;
+    }
+
     .deal-mini-card {
-        grid-template-columns: 72px minmax(0, 1fr);
+        grid-template-columns: 92px minmax(0, 1fr);
+        grid-template-areas:
+            "thumb info"
+            "thumb price";
         gap: 0.85rem;
         border-radius: 22px;
         padding: 0.88rem;
         border: 1px solid rgba(255, 255, 255, 0.18);
         background:
-            radial-gradient(120% 150% at 0% 0%, rgba(217, 4, 41, 0.16), transparent 55%),
-            linear-gradient(140deg, rgba(13, 17, 26, 0.94), rgba(6, 10, 20, 0.92));
+            radial-gradient(120% 150% at 0% 0%, rgba(217, 4, 41, 0.12), transparent 55%),
+            linear-gradient(140deg, rgba(13, 17, 26, 0.88), rgba(6, 10, 20, 0.86));
         box-shadow:
             0 18px 36px rgba(0, 0, 0, 0.36),
             inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
 
     .deal-mini-thumb {
-        width: 72px;
-        height: 72px;
-        border-radius: 16px;
+        width: 92px;
+        height: 92px;
+        border-radius: 14px;
         border: 1px solid rgba(255, 255, 255, 0.28);
         box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+    }
+
+    .deal-mini-info {
+        min-width: 0;
     }
 
     .deal-mini-route {
@@ -2215,9 +2290,14 @@ body.light-theme .deal-mini-card {
         color: rgba(255, 255, 255, 0.74);
     }
 
+    .deal-mini-extra {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.72);
+    }
+
     .deal-mini-price {
         text-align: left;
-        grid-column: span 2;
+        grid-column: auto;
         margin-top: 0.32rem;
         padding-top: 0.55rem;
         border-top: 1px solid rgba(255, 255, 255, 0.12);
@@ -2249,6 +2329,10 @@ body.light-theme .deal-mini-card {
 
     body.light-theme .deal-mini-meta {
         color: #4b5563;
+    }
+
+    body.light-theme .deal-mini-extra {
+        color: #64748b;
     }
 
     body.light-theme .deal-mini-price {
