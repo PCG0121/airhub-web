@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('nextSlide');
     let currentSlide = 0;
     let slideInterval;
+    let isTransitioning = false;
+    const pendingSlideLoads = new WeakMap();
 
     const heroTagline = document.querySelector('.hero-tagline');
     const heroTitle = document.querySelector('.hero-title');
@@ -44,23 +46,82 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function applySlideBackground(slide) {
+        if (!slide || slide.dataset.bgLoaded === 'true') return;
+
+        const bg = slide.dataset.bg;
+        if (!bg) return;
+
+        slide.style.backgroundImage = `url('${bg}')`;
+        slide.dataset.bgLoaded = 'true';
+    }
+
+    function preloadSlideImage(slide) {
+        if (!slide || slide.dataset.bgLoaded === 'true') {
+            return Promise.resolve();
+        }
+
+        if (pendingSlideLoads.has(slide)) {
+            return pendingSlideLoads.get(slide);
+        }
+
+        const bg = slide.dataset.bg;
+        if (!bg) {
+            return Promise.resolve();
+        }
+
+        const imageLoadPromise = new Promise(resolve => {
+            const img = new Image();
+            img.src = bg;
+
+            if (img.complete) {
+                applySlideBackground(slide);
+                resolve();
+                return;
+            }
+
+            img.onload = () => {
+                applySlideBackground(slide);
+                resolve();
+            };
+
+            img.onerror = () => {
+                resolve();
+            };
+        });
+
+        pendingSlideLoads.set(slide, imageLoadPromise);
+        return imageLoadPromise;
+    }
+
     function updateCarousel(index) {
-        // Remove active class from current elements
-        slides[currentSlide].classList.remove('active');
-        dots[currentSlide].classList.remove('active');
+        if (!slides.length || isTransitioning) return;
 
-        // Set new index
-        currentSlide = (index + slides.length) % slides.length;
+        const nextIndex = (index + slides.length) % slides.length;
+        if (nextIndex === currentSlide) return;
 
-        // Add active class to new elements
-        slides[currentSlide].classList.add('active');
-        dots[currentSlide].classList.add('active');
+        isTransitioning = true;
 
-        // Update Text Content with animation
-        updateHeroText(currentSlide);
+        preloadSlideImage(slides[nextIndex]).finally(() => {
+            // Remove active class from current elements
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
 
-        // Reset the timer when manually interacting
-        resetTimer();
+            // Set new index
+            currentSlide = nextIndex;
+
+            // Add active class to new elements
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+
+            // Update Text Content with animation
+            updateHeroText(currentSlide);
+
+            // Reset the timer when manually interacting
+            resetTimer();
+
+            isTransitioning = false;
+        });
     }
 
     function updateHeroText(index) {
@@ -111,7 +172,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start the initial timer
     if (slides.length > 0) {
+        applySlideBackground(slides[currentSlide]);
         resetTimer();
+
+        const deferPreload = window.requestIdleCallback || (cb => setTimeout(cb, 800));
+        deferPreload(() => {
+            slides.forEach((slide, index) => {
+                if (index !== currentSlide) {
+                    preloadSlideImage(slide);
+                }
+            });
+        });
     }
 
     // === THEME TOGGLE ===
@@ -119,18 +190,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
     if (themeToggle) {
-        const toggleTheme = () => {
-            body.classList.toggle('light-theme');
+        const syncThemeIcon = () => {
             const isLight = body.classList.contains('light-theme');
             themeToggle.textContent = isLight ? '\u{1F319}' : '\u2600\uFE0F';
         };
 
+        const toggleTheme = () => {
+            body.classList.toggle('light-theme');
+            syncThemeIcon();
+        };
+
         themeToggle.addEventListener('click', toggleTheme);
         activateOnKeyboard(themeToggle, toggleTheme);
-
-        if (!body.classList.contains('light-theme')) {
-            themeToggle.textContent = '\u2600\uFE0F'; // Default to Sun when in Dark mode
-        }
+        syncThemeIcon();
     }
 
     // === MOBILE MENU TOGGLE ===

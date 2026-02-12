@@ -482,6 +482,8 @@ body {
     align-items: center;
     gap: 1.5rem;
     /* Increased gap for clarity */
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
 .theme-toggle,
@@ -509,6 +511,25 @@ body {
     z-index: 1001;
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
+}
+
+#themeToggle {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid rgba(217, 4, 41, 0.45);
+    background: rgba(217, 4, 41, 0.12);
+    color: #ffffff;
+    z-index: 1300;
+}
+
+body.light-theme #themeToggle {
+    border-color: rgba(217, 4, 41, 0.55);
+    background: rgba(217, 4, 41, 0.08);
+    color: #111827;
 }
 
 /* Light Mode Adjustments for Glass */
@@ -688,6 +709,74 @@ body.light-theme .cart-icon {
     font-family: var(--font-display);
     border: none;
     box-shadow: 0 4px 15px rgba(217, 4, 41, 0.3);
+}
+
+@media (min-width: 769px) {
+    .nav-container {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .nav-center-links {
+        justify-self: center;
+    }
+
+    .nav-actions {
+        display: flex !important;
+        justify-self: end;
+        align-items: center;
+        gap: 0.9rem;
+        flex: 0 0 auto;
+    }
+
+    #themeToggle {
+        display: inline-flex !important;
+        width: auto !important;
+        height: 48px !important;
+        min-width: 118px !important;
+        min-height: 48px !important;
+        padding: 0 1rem;
+        gap: 0.45rem;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        top: 0.95rem !important;
+        right: 1rem !important;
+        left: auto !important;
+        transform: none !important;
+        z-index: 6000 !important;
+    }
+
+    #themeToggle::before {
+        content: "Theme";
+        font-family: var(--font-primary);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        line-height: 1;
+    }
+
+    .mobile-menu-btn {
+        display: none !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    .navbar {
+        padding: 0.65rem 1.7rem;
+    }
+
+    .nav-center-links {
+        gap: 1.4rem;
+    }
+
+    .nav-link {
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+    }
 }
 
 /* === BUTTONS === */
@@ -1481,6 +1570,16 @@ body:not(.light-theme) #search .floating-input select {
     padding: var(--spacing-xl) 0;
 }
 
+/* Reduce only the Search -> Destinations gap */
+#search.search-section {
+    padding-bottom: var(--spacing-md) !important;
+}
+
+#destinations.destinations-section {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+}
+
 @media (min-width: 769px) {
     #destinations.destinations-section {
         min-height: auto;
@@ -1489,9 +1588,9 @@ body:not(.light-theme) #search .floating-input select {
 
     #destinations .container {
         width: 100%;
-        max-width: none;
-        padding-left: 0;
-        padding-right: 0;
+        max-width: 1200px;
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
     }
 
     #destinations .destinations-pro {
@@ -1687,9 +1786,9 @@ body:not(.light-theme) #search .floating-input select {
 /* === BENTO BOX GRID === */
 .bento-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--spacing-md);
-    grid-auto-rows: 250px;
+    grid-auto-rows: 280px;
 }
 
 .bento-card {
@@ -1697,12 +1796,18 @@ body:not(.light-theme) #search .floating-input select {
     overflow: hidden;
     position: relative;
     cursor: none;
-    transition: var(--transition-smooth);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.3);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.35s ease;
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    animation: bentoCardReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--delay, 0s);
 }
 
 .bento-large {
-    grid-column: span 2;
-    grid-row: span 2;
+    grid-column: span 1;
+    grid-row: span 1;
 }
 
 .bento-wide {
@@ -1713,11 +1818,25 @@ body:not(.light-theme) #search .floating-input select {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     transition: var(--transition-smooth);
 }
 
 .bento-card:hover .bento-image {
-    transform: scale(1.1);
+    transform: scale(1.08);
+}
+
+.bento-grid .bento-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.45);
+}
+
+@media (min-width: 1025px) {
+    .bento-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 .bento-content {
@@ -1759,6 +1878,318 @@ body:not(.light-theme) #search .floating-input select {
 
 .magnetic-card:hover {
     transform: translateY(-10px);
+}
+
+@keyframes bentoCardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* === DEALS SECTION === */
+.deals-section {
+    padding: var(--spacing-xl) 0;
+}
+
+#deals.deals-section {
+    padding-top: var(--spacing-md);
+}
+
+.deals-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--spacing-md);
+    align-items: stretch;
+}
+
+.deal-feature-card {
+    position: relative;
+    min-height: 520px;
+    border-radius: 28px;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+}
+
+.deal-feature-media {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.03);
+    transition: transform 0.85s ease;
+}
+
+.deal-feature-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to top, rgba(3, 6, 12, 0.95), rgba(3, 6, 12, 0.2) 56%, rgba(3, 6, 12, 0.05)),
+        radial-gradient(70% 50% at 90% 0%, rgba(217, 4, 41, 0.3), transparent 70%);
+    z-index: 1;
+}
+
+.deal-feature-overlay {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: clamp(1.2rem, 2vw, 1.8rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.deal-badge {
+    display: inline-flex;
+    align-self: flex-start;
+    margin-bottom: 0.8rem;
+    padding: 0.4rem 0.78rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(217, 4, 41, 0.24);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.deal-route {
+    margin: 0 0 0.35rem;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.86rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.deal-feature-overlay h3 {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 2.9vw, 2.6rem);
+    line-height: 1.08;
+}
+
+.deal-copy {
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.84);
+    max-width: 520px;
+}
+
+.deal-feature-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+}
+
+.deal-feature-meta span {
+    padding: 0.42rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 0.73rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.deal-cta-btn {
+    align-self: flex-start;
+    border: none;
+    border-radius: 999px;
+    padding: 0.82rem 1.35rem;
+    background: var(--gradient-accent);
+    color: var(--bg-primary);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.deal-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 26px rgba(217, 4, 41, 0.38);
+}
+
+.deal-feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 34px 70px rgba(0, 0, 0, 0.52);
+}
+
+.deal-feature-card:hover .deal-feature-media {
+    transform: scale(1.09);
+}
+
+.deals-list {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.deal-mini-card {
+    display: grid;
+    grid-template-columns: 86px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.8rem;
+    border-radius: 20px;
+    padding: 0.72rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(8, 9, 14, 0.78);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    transform: translateY(14px);
+    animation: dealMiniReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--deal-delay, 0s);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.deal-mini-card:hover {
+    transform: translateX(5px);
+    border-color: rgba(255, 255, 255, 0.26);
+    box-shadow: 0 20px 42px rgba(0, 0, 0, 0.35);
+}
+
+.deal-mini-thumb {
+    width: 86px;
+    height: 86px;
+    border-radius: 14px;
+    background-size: cover;
+    background-position: center;
+}
+
+.deal-mini-route {
+    margin: 0 0 0.2rem;
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+}
+
+.deal-mini-meta {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+}
+
+.deal-mini-price {
+    text-align: right;
+}
+
+.deal-mini-price span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.deal-mini-price strong {
+    display: block;
+    font-size: 1.45rem;
+    font-family: var(--font-display);
+    line-height: 1;
+}
+
+body.light-theme .deal-feature-card {
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.16);
+}
+
+body.light-theme .deal-feature-card::after {
+    background:
+        linear-gradient(to top, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.25) 56%, rgba(255, 255, 255, 0.06)),
+        radial-gradient(70% 50% at 90% 0%, rgba(217, 4, 41, 0.2), transparent 70%);
+}
+
+body.light-theme .deal-route,
+body.light-theme .deal-copy,
+body.light-theme .deal-feature-meta span,
+body.light-theme .deal-badge {
+    color: #111827;
+}
+
+body.light-theme .deal-badge,
+body.light-theme .deal-feature-meta span {
+    border-color: rgba(17, 24, 39, 0.2);
+    background: rgba(255, 255, 255, 0.58);
+}
+
+body.light-theme .deal-mini-card {
+    border-color: rgba(0, 0, 0, 0.12);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(246, 248, 252, 0.95)),
+        #ffffff;
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+}
+
+@keyframes dealMiniReveal {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1024px) {
+    #destinations.destinations-section {
+        padding-bottom: var(--spacing-sm);
+    }
+
+    #deals.deals-section {
+        padding-top: var(--spacing-sm);
+    }
+
+    .deals-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .deal-feature-card {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 768px) {
+    #destinations.destinations-section {
+        padding-bottom: 0.75rem;
+    }
+
+    #deals.deals-section {
+        padding-top: 0.75rem;
+    }
+
+    .deals-section {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .deal-feature-card {
+        min-height: 360px;
+    }
+
+    .deal-mini-card {
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: 0.7rem;
+    }
+
+    .deal-mini-thumb {
+        width: 72px;
+        height: 72px;
+    }
+
+    .deal-mini-price {
+        text-align: left;
+        grid-column: span 2;
+        margin-top: 0.1rem;
+    }
 }
 
 /* === DESTINATIONS PRO SHOWCASE === */
@@ -2577,7 +3008,8 @@ body.light-theme .booking-step-card p {
         display: flex !important;
         gap: 0.8rem !important;
         justify-content: flex-end !important;
-        flex: 1 !important;
+        flex: 0 0 auto !important;
+        min-width: max-content !important;
     }
 
     .theme-toggle,
@@ -2691,5 +3123,40 @@ body.light-theme .booking-step-card p {
 
     .marquee-container {
         padding: 1rem 0;
+    }
+}
+
+/* Final desktop navbar toggle fix: keep it visible inside header */
+@media (min-width: 769px) {
+    .navbar .nav-actions {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 0.75rem !important;
+        min-width: 52px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .navbar #themeToggle {
+        display: inline-flex !important;
+        position: static !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 1200 !important;
+    }
+
+    .navbar #themeToggle::before {
+        content: none !important;
     }
 }
