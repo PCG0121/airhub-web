@@ -2601,9 +2601,10 @@ body.light-theme .modern-destination-meta p {
 }
 
 .about-title {
-    margin: 0 0 0.45rem;
+    margin: -0.18rem 0 0.45rem;
     font-family: var(--font-display);
     font-size: clamp(1.6rem, 2.8vw, 2.5rem);
+    line-height: 1.12;
 }
 
 .about-subtitle {
@@ -3136,6 +3137,10 @@ body.light-theme .about-shell {
     .about-shell {
         border-radius: 22px;
         padding: 0.9rem;
+    }
+
+    .about-title {
+        margin-top: -0.32rem;
     }
 
     .about-cta-btn {
