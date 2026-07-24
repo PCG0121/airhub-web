@@ -3,6 +3,84 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const desktopMotion = window.matchMedia('(min-width: 769px)').matches && !reduceMotion;
+
+    // === PREMIUM SMOOTH SCROLL + GSAP MOTION ===
+    if (desktopMotion && window.Lenis) {
+        const lenis = new window.Lenis({
+            duration: 1.15,
+            smoothWheel: true,
+            wheelMultiplier: 0.9,
+            touchMultiplier: 1.1
+        });
+
+        if (window.gsap) {
+            window.gsap.ticker.add((time) => lenis.raf(time * 1000));
+            window.gsap.ticker.lagSmoothing(0);
+        } else {
+            const lenisFrame = (time) => {
+                lenis.raf(time);
+                requestAnimationFrame(lenisFrame);
+            };
+            requestAnimationFrame(lenisFrame);
+        }
+    }
+
+    if (window.gsap && window.ScrollTrigger && !reduceMotion) {
+        window.gsap.registerPlugin(window.ScrollTrigger);
+
+        const heroTimeline = window.gsap.timeline({
+            scrollTrigger: {
+                trigger: '.hero-section',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1
+            }
+        });
+
+        heroTimeline
+            .to('.hero-title', { yPercent: -18, scale: 0.94, opacity: 0.2, ease: 'none' }, 0)
+            .to('.hero-subtitle, .hero-cta, .hero-tagline', { yPercent: -30, opacity: 0, ease: 'none' }, 0)
+            .to('.hero-route-hud', { y: 90, opacity: 0, ease: 'none' }, 0)
+            .to('.hero-bg-mask', { opacity: 0.94, ease: 'none' }, 0);
+
+        window.gsap.from('.journey-stat', {
+            scrollTrigger: {
+                trigger: '.journey-strip',
+                start: 'top 84%'
+            },
+            y: 34,
+            opacity: 0,
+            stagger: 0.12,
+            duration: 0.8,
+            ease: 'power3.out'
+        });
+
+        window.gsap.utils.toArray('.bento-card').forEach((card, index) => {
+            window.gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 92%'
+                },
+                y: 70,
+                rotateX: 7,
+                opacity: 0,
+                duration: 0.9,
+                delay: index * 0.035,
+                ease: 'power3.out',
+                clearProps: 'transform'
+            });
+        });
+    }
+
+    document.querySelectorAll('[data-scroll-target]').forEach((control) => {
+        control.addEventListener('click', () => {
+            const destination = document.querySelector(control.dataset.scrollTarget);
+            destination?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+        });
+    });
+
     // === HERO BACKGROUND CAROUSEL ===
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.dot');
@@ -670,4 +748,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-

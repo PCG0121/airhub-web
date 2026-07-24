@@ -95,6 +95,32 @@
             <div class="glass-orb orb-3"></div>
         </div>
 
+        <!-- Procedural WebGL aircraft scene. The canvas is decorative and ignored by assistive technology. -->
+        <div class="hero-3d-stage" id="hero3dStage" aria-hidden="true">
+            <canvas id="flightCanvas"></canvas>
+            <div class="hero-3d-glow"></div>
+            <div class="hero-flight-path">
+                <span class="route-point route-point-start"></span>
+                <span class="route-line"></span>
+                <span class="route-point route-point-end"></span>
+            </div>
+        </div>
+
+        <div class="hero-route-hud" aria-label="AirHub connects Colombo with worldwide destinations">
+            <div class="route-code">
+                <strong>CMB</strong>
+                <span>Colombo</span>
+            </div>
+            <div class="route-progress" aria-hidden="true">
+                <span class="route-progress-line"></span>
+                <span class="route-progress-plane">✈</span>
+            </div>
+            <div class="route-code route-code-right">
+                <strong>WORLD</strong>
+                <span>Global network</span>
+            </div>
+        </div>
+
         <!-- Slider Navigation Controls (Moved outside aurora-bg for better clickability) -->
         <div class="slider-controls">
             <button class="slider-btn prev-btn" id="prevSlide" aria-label="Previous Slide">&#10094;</button>
@@ -123,10 +149,10 @@
         </p>
 
         <div class="hero-cta reveal-element">
-            <button class="btn-editorial magnetic-btn">Explore Collection</button>
-            <a href="#" class="btn-story magnetic-btn">
+            <button class="btn-editorial magnetic-btn" type="button" data-scroll-target="#destinations">Explore Collection</button>
+            <a href="https://wa.me/94771101855" class="btn-story magnetic-btn" target="_blank" rel="noopener noreferrer">
                 <div class="play-icon">&rarr;</div>
-                Watch Story
+                Plan on WhatsApp
             </a>
         </div>
 
@@ -136,11 +162,32 @@
         </div>
     </section>
 
+    <!-- Compact premium proof strip -->
+    <section class="journey-strip" aria-label="AirHub service highlights">
+        <div class="journey-strip-inner">
+            <div class="journey-stat">
+                <span class="journey-stat-number">50+</span>
+                <span class="journey-stat-label">Global destinations</span>
+            </div>
+            <div class="journey-divider" aria-hidden="true"></div>
+            <div class="journey-stat">
+                <span class="journey-stat-number">24/7</span>
+                <span class="journey-stat-label">Travel assistance</span>
+            </div>
+            <div class="journey-divider" aria-hidden="true"></div>
+            <div class="journey-stat">
+                <span class="journey-stat-number">360°</span>
+                <span class="journey-stat-label">Journey planning</span>
+            </div>
+            <p class="journey-signature">Connecting you to the world.</p>
+        </div>
+    </section>
+
     <!-- Marquee Section -->
     <div class="marquee-container reveal-element">
         <div class="marquee-content">
             <div class="marquee-track">
-                <span class="marquee-item">MALAYASIA</span>
+                <span class="marquee-item">MALAYSIA</span>
                 <span class="marquee-dot"></span>
                 <span class="marquee-item">THAILAND</span>
                 <span class="marquee-dot"></span>
@@ -153,7 +200,7 @@
                 <span class="marquee-item">MALDIVES</span>
             </div>
             <div class="marquee-track" aria-hidden="true">
-                <span class="marquee-item">MALAYASIA</span>
+                <span class="marquee-item">MALAYSIA</span>
                 <span class="marquee-dot"></span>
                 <span class="marquee-item">THAILAND</span>
                 <span class="marquee-dot"></span>
@@ -327,7 +374,7 @@
 
             <div class="deals-layout reveal-element">
                 <article class="deal-feature-card">
-                    <div class="deal-feature-media" style="background-image: url('images/optimized/deal-main.jpg');"></div>
+                    <div class="deal-feature-media" style="background-image: url('images/optimized/Dubai.jpg');"></div>
                     <div class="deal-feature-overlay">
                         <span class="deal-badge">Flash Deal</span>
                         <p class="deal-route">Colombo -> Dubai</p>
@@ -344,7 +391,7 @@
 
                 <div class="deals-list">
                     <article class="deal-mini-card" style="--deal-delay: 0.06s;">
-                        <div class="deal-mini-thumb lazy-bg" data-bg="images/optimized/deal-1.jpg"></div>
+                        <div class="deal-mini-thumb lazy-bg" data-bg="images/optimized/Thailand.jpg"></div>
                         <div class="deal-mini-info">
                             <p class="deal-mini-route">Colombo -> Bangkok</p>
                             <p class="deal-mini-meta">Round Trip | Economy</p>
@@ -483,7 +530,11 @@
         </div>
     </footer>
 
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+    <script src="vendor/lenis.min.js"></script>
     <script src="script.js"></script>
+    <script type="module" src="3d-scene.js"></script>
 </body>
 
 </html>

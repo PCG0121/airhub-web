@@ -3426,3 +3426,433 @@ body.light-theme .about-shell {
         content: none !important;
     }
 }
+
+/* ==================================================
+   AIRHUB 3D FLIGHT EXPERIENCE
+   ================================================== */
+.hero-3d-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    pointer-events: none;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 1.2s ease;
+}
+
+.hero-3d-stage.is-ready {
+    opacity: 1;
+}
+
+#flightCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 35px 55px rgba(0, 0, 0, 0.55));
+}
+
+.hero-3d-glow {
+    position: absolute;
+    right: 5%;
+    top: 20%;
+    width: min(38vw, 620px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(217, 4, 41, 0.26), rgba(217, 4, 41, 0.05) 42%, transparent 70%);
+    filter: blur(20px);
+    mix-blend-mode: screen;
+    animation: airhubGlow 5s ease-in-out infinite alternate;
+}
+
+.hero-flight-path {
+    position: absolute;
+    right: 6.5%;
+    top: 17%;
+    width: min(42vw, 680px);
+    height: 48%;
+    border-top: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 50%;
+    transform: rotate(-9deg);
+    opacity: 0.7;
+}
+
+.route-point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.06), 0 0 25px rgba(255, 255, 255, 0.6);
+}
+
+.route-point-start {
+    left: -2px;
+    top: -4px;
+}
+
+.route-point-end {
+    right: -2px;
+    top: -4px;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 7px rgba(217, 4, 41, 0.12), 0 0 28px rgba(217, 4, 41, 0.9);
+}
+
+.hero-route-hud {
+    position: absolute;
+    left: clamp(2rem, 7.5vw, 8.5rem);
+    bottom: 3.5rem;
+    z-index: 14;
+    display: grid;
+    grid-template-columns: auto minmax(120px, 240px) auto;
+    align-items: center;
+    gap: 1rem;
+    min-width: min(520px, 50vw);
+    padding: 0.9rem 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+    background: rgba(5, 7, 12, 0.46);
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    color: #ffffff;
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.25);
+}
+
+.route-code {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+}
+
+.route-code-right {
+    text-align: right;
+}
+
+.route-code strong {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.13em;
+}
+
+.route-code span {
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.route-progress {
+    position: relative;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.route-progress-line {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 58%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.45), var(--accent-primary));
+    box-shadow: 0 0 14px rgba(217, 4, 41, 0.7);
+}
+
+.route-progress-plane {
+    position: absolute;
+    left: 58%;
+    top: 50%;
+    color: var(--accent-primary);
+    font-size: 0.8rem;
+    transform: translate(-50%, -50%) rotate(8deg);
+    animation: routePlanePulse 1.8s ease-in-out infinite;
+}
+
+.journey-strip {
+    position: relative;
+    z-index: 20;
+    padding: 0 3vw;
+    margin-top: -1px;
+    background: #080808;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.journey-strip::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: min(780px, 70vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, rgba(217, 4, 41, 0.78), transparent);
+}
+
+.journey-strip-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 124px;
+    display: grid;
+    grid-template-columns: auto 1px auto 1px auto 1fr;
+    align-items: center;
+    gap: clamp(1rem, 2.7vw, 3.3rem);
+}
+
+.journey-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+}
+
+.journey-stat-number {
+    font-family: var(--font-serif);
+    font-size: clamp(1.7rem, 2.8vw, 2.7rem);
+    font-style: italic;
+    color: var(--accent-primary);
+}
+
+.journey-stat-label {
+    max-width: 92px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.63rem;
+    line-height: 1.45;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.journey-divider {
+    width: 1px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.journey-signature {
+    justify-self: end;
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 1.8vw, 1.5rem);
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.74);
+}
+
+.bento-grid {
+    perspective: 1100px;
+}
+
+.bento-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.deal-feature-card,
+.deal-mini-card,
+.about-main-card,
+.about-feature-card,
+.search-widget {
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.12);
+}
+
+.hero-3d-stage.webgl-unavailable::after {
+    content: "✈";
+    position: absolute;
+    right: 16%;
+    top: 38%;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: clamp(4rem, 10vw, 9rem);
+    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5));
+    transform: rotate(-10deg);
+}
+
+@keyframes airhubGlow {
+    from {
+        opacity: 0.56;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+@keyframes routePlanePulse {
+    0%,
+    100% {
+        transform: translate(-50%, -50%) rotate(8deg) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(8deg) scale(1.25);
+    }
+}
+
+@media (min-width: 1000px) {
+    .hero-section {
+        align-items: flex-start;
+        text-align: left;
+        padding-left: clamp(4.5rem, 7.5vw, 9rem);
+        padding-right: clamp(4.5rem, 7.5vw, 9rem);
+    }
+
+    .hero-tagline,
+    .hero-title,
+    .hero-subtitle,
+    .hero-cta {
+        max-width: min(760px, 58vw);
+    }
+
+    .hero-title {
+        font-size: clamp(3.8rem, 6.2vw, 6.7rem);
+    }
+
+    .hero-subtitle {
+        margin-left: 0;
+        max-width: 520px;
+    }
+
+    .scroll-indicator {
+        position: absolute;
+        right: 5.5rem;
+        bottom: 2.5rem;
+        z-index: 15;
+    }
+}
+
+@media (max-width: 999px) {
+    .hero-route-hud {
+        left: 2rem;
+        min-width: min(470px, calc(100vw - 4rem));
+    }
+
+    .hero-3d-stage {
+        opacity: 0.78;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 820px;
+        justify-content: flex-start;
+        padding-top: 9.25rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    .hero-title {
+        max-width: 620px;
+    }
+
+    .hero-subtitle {
+        max-width: 500px;
+    }
+
+    .hero-3d-stage {
+        top: 32%;
+        height: 48%;
+        opacity: 0.7;
+    }
+
+    .hero-3d-glow {
+        right: -15%;
+        top: 12%;
+        width: 90vw;
+    }
+
+    .hero-flight-path {
+        right: -18%;
+        top: 17%;
+        width: 94vw;
+        height: 55%;
+    }
+
+    .hero-route-hud {
+        left: 1rem;
+        right: 1rem;
+        bottom: 5.4rem;
+        min-width: 0;
+        grid-template-columns: auto minmax(70px, 1fr) auto;
+        border-radius: 15px;
+        padding: 0.75rem;
+    }
+
+    .slider-dots {
+        bottom: 1.25rem;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+
+    .journey-strip {
+        padding: 1.5rem 1rem;
+    }
+
+    .journey-strip-inner {
+        min-height: 0;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.7rem;
+    }
+
+    .journey-stat {
+        align-items: center;
+        flex-direction: column;
+        gap: 0.35rem;
+        text-align: center;
+    }
+
+    .journey-stat-label {
+        max-width: none;
+        font-size: 0.55rem;
+    }
+
+    .journey-divider,
+    .journey-signature {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        min-height: 780px;
+    }
+
+    .hero-tagline {
+        letter-spacing: 0.18em;
+    }
+
+    .hero-title {
+        font-size: clamp(2.35rem, 11vw, 3.25rem);
+    }
+
+    .hero-subtitle {
+        font-size: 0.88rem;
+        line-height: 1.6;
+    }
+
+    .hero-cta {
+        width: min(100%, 310px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-route-hud {
+        bottom: 4.8rem;
+    }
+
+    .route-code span {
+        display: none;
+    }
+
+    .route-code strong {
+        font-size: 0.75rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .hero-3d-glow,
+    .route-progress-plane {
+        animation: none;
+    }
+
+    .hero-slide.active {
+        transform: scale(1.04);
+    }
+}
